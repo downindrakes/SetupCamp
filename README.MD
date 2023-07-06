@@ -8,3 +8,5 @@ This script aims to be the new RV that makes the whole process a lot simpler (I 
 * Add more tools to be installed
 * Create roles so this can be used for hacking VMs and Dev VMs without a need to manually specify
 
+## Credits
+The idea for this comes from the super awesome [@agr0dan](https://agrohacksstuff.io/) who I met while helping with DOE's Cyberforce. His [golden-kali](https://github.com/AgroDan/golden-kali) was a huge help for the red team for 2022 and is the direct inspiration for this repo. 
