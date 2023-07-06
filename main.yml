@@ -1,0 +1,44 @@
+---
+- name: Initial configuraiton playbook
+  hosts: localhost
+  connection: local
+  become: true
+  
+  tasks: 
+  - name: Install needed packages (and some fun ones)
+    apt: 
+      name: 
+      - zsh
+      - tmux
+      - git
+
+
+  - name: Set zsh as default shell
+    command: chsh -s $(which zsh)
+
+  - name: Install Oh My zsh
+    command: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"  --unattended
+
+  - name: ensure fonts directory
+    file:
+      path: "{{ lookup('env', 'HOME') }}/.local/share/fonts"
+      state: directory
+
+  - name: Install Meslo S mono
+    uri: 
+      url: https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/Meslo/S/Regular/MesloLGSNerdFontMono-Regular.ttf?raw=true
+      dest: "{{ lookup('env', 'HOME') }}/.local/share/fonts"
+      
+  - name: Ensure .cfg is in .gitignore 
+    copy:
+        src: .gitignore
+        dest: .cfg/
+
+  - name:  Clone bare repo for dotfiles
+    git: 
+      repo: https://github.com/downindrakes/dotfiles.git
+      dest: "{{ lookup('env', 'HOME') }}/.cfg"
+      bare: true
+
+  - name: Checkout dotfiles
+    command: /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME checkout
