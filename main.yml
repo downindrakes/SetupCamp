@@ -3,6 +3,7 @@
   hosts: localhost
   connection: local
   become: true
+  gather_facts: true
   
   tasks: 
   - name: Install needed packages (and some fun ones)
@@ -14,7 +15,9 @@
 
 
   - name: Set zsh as default shell
-    command: chsh -s $(which zsh)
+    command: chsh -s zsh
+    when: ansible_facts[SHELL] != /usr/bin/zsh
+  
 
   - name: Install Oh My zsh
     command: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"  --unattended
@@ -42,3 +45,8 @@
 
   - name: Checkout dotfiles
     command: /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME checkout
+
+  - name: isntall Powerlevel10k
+    git:
+      repo: https://github.com/romkatv/powerlevel10k.git 
+      dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/themes/powerlevel10k"
