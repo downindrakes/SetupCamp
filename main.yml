@@ -14,12 +14,10 @@
       - git
 
 
-  - name: Set zsh as default shell
-    command: chsh -s zsh
+  # - name: Set zsh as default shell ## Commenting out for now. Need to investigate how to do this gracefully and for where the playbook is at now it's not needed. 
+  #   command: chsh -s zsh
   
-  
-
-  - name: Install Oh My zsh
+    - name: Install Oh My zsh
     command: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
   - name: ensure fonts directory
