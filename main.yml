@@ -16,7 +16,7 @@
 
   - name: Set zsh as default shell
     command: chsh -s zsh
-    when: ansible_facts[SHELL] != /usr/bin/zsh
+  
   
 
   - name: Install Oh My zsh
